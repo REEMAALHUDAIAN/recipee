@@ -9,6 +9,17 @@ import Foundation
 import Combine
 import SwiftUI
 
+//class NewRecipeViewModel: ObservableObject {
+//    @Published var recipe: Recipe
+//    var recipeStore: RecipeStore
+//
+//    init(recipeStore: RecipeStore, recipe: Recipe) {
+//        self.recipeStore = recipeStore
+//        self.recipe = recipe
+//    }
+//
+//
+//}
 
 
 
@@ -24,8 +35,13 @@ class NewRecipeViewModel: ObservableObject {
     }
 
     func saveRecipe(completion: @escaping () -> Void) {
-        recipeStore.addRecipe(recipe)
-        completion()
+        // Add recipe to the store or update existing recipe
+        if let index = recipeStore.recipes.firstIndex(where: { $0.id == recipe.id }) {
+            recipeStore.recipes[index] = recipe // Update existing recipe
+        } else {
+            recipeStore.recipes.append(recipe) // Add new recipe
+        }
+        completion() // Call the completion handler after saving
     }
 
     func editRecipe(completion: @escaping () -> Void) {
@@ -53,6 +69,11 @@ class RecipeStore: ObservableObject {
             recipes[index] = recipe
         }
     }
+    func deleteRecipe(_ recipe: Recipe) {
+           if let index = recipes.firstIndex(where: { $0.id == recipe.id }) {
+               recipes.remove(at: index)
+           }
+       }
 }
 
 

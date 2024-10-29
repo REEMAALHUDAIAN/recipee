@@ -50,7 +50,11 @@ struct ImagePicker: UIViewControllerRepresentable {
 
 //import SwiftUI
 
-import SwiftUI
+//import SwiftUI
+//
+//import SwiftUI
+
+//struct NewRecipeView: View import SwiftUI
 
 struct NewRecipeView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -63,7 +67,7 @@ struct NewRecipeView: View {
                 Form {
                     Section {
                         imagePickerButton
-                            .frame(height: 130) // Fixed height for the image picker
+                            .frame(height: 130)
                     }
                     
                     Section(header: Text("Title")
@@ -72,9 +76,8 @@ struct NewRecipeView: View {
                         .foregroundColor(Color.black)
                         .lineLimit(6)) {
                         TextField("Title", text: $viewModel.recipe.name)
-                            .disabled(isEditing) // Disable title editing if in edit mode
                             .padding(.vertical, 10)
-                            .frame(height: 50) // Fixed height for title input
+                            .frame(height: 50)
                     }
                     
                     Section(header: Text("Description")
@@ -86,8 +89,7 @@ struct NewRecipeView: View {
                             get: { viewModel.recipe.description ?? "" },
                             set: { viewModel.recipe.description = $0.isEmpty ? nil : $0 }
                         ))
-                        .frame(height: 100) // Fixed height for text editor
-                        .disabled(isEditing) // Disable description editing if in edit mode
+                        .frame(height: 100)
                         .padding(.vertical, 10)
                     }
                     
@@ -98,14 +100,14 @@ struct NewRecipeView: View {
                             .foregroundColor(Color.black)
                             .lineLimit(6)
                         
-                        Spacer() // Push the button to the right
-
+                        Spacer()
+                        
                         Button(action: {
-                            viewModel.isShowingIngredientPopup = true // Show the popup
+                            viewModel.isShowingIngredientPopup = true
                         }) {
-                            Image(systemName: "plus.circle") // Use only the system image
-                                .foregroundColor(.blue) // Change the button color
-                                .font(.title) // Optionally adjust the size of the icon
+                            Image(systemName: "plus.circle")
+                                .foregroundColor(.blue)
+                                .font(.title)
                         }
                     }) {
                         ForEach(viewModel.recipe.ingredients) { ingredient in
@@ -121,8 +123,8 @@ struct NewRecipeView: View {
                 .navigationBarItems(trailing: saveButton)
                 .sheet(isPresented: $viewModel.isShowingIngredientPopup) {
                     IngredientPopup { ingredient in
-                        viewModel.recipe.ingredients.append(ingredient) // Add ingredient to the list
-                        viewModel.isShowingIngredientPopup = false // Dismiss the popup
+                        viewModel.recipe.ingredients.append(ingredient)
+                        viewModel.isShowingIngredientPopup = false
                     }
                 }
                 .sheet(isPresented: $viewModel.isImagePickerPresented) {
@@ -135,10 +137,10 @@ struct NewRecipeView: View {
     private var saveButton: some View {
         Button("Save") {
             viewModel.saveRecipe {
-                self.presentationMode.wrappedValue.dismiss() // Return to previous view after saving
+                self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .foregroundColor(Color(red: 0.985, green: 0.379, blue: 0.072)) // Color for the Save button
+        .foregroundColor(Color(red: 0.985, green: 0.379, blue: 0.072))
     }
 
     private var imagePickerButton: some View {
@@ -149,8 +151,8 @@ struct NewRecipeView: View {
                 Image(uiImage: selectedImage)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 413, height: 181) // Fixed dimensions for the selected image
-                    .cornerRadius(10) // Rounded corners
+                    .frame(width: 413, height: 181)
+                    .cornerRadius(10)
                     .padding()
             } else {
                 VStack {
@@ -159,20 +161,19 @@ struct NewRecipeView: View {
                         .frame(width: 80, height: 80)
                         .foregroundColor(.orange)
                     Text("Upload Photo")
-                        .foregroundColor(Color(red: 251/255, green: 97/255, blue: 18/255)) // Desired color
-                        .font(.system(size: 30, weight: .regular)) // Font size and weight
-                        .opacity(1) // Opacity
-                        .multilineTextAlignment(.center) // Center text alignment
+                        .foregroundColor(Color(red: 251/255, green: 97/255, blue: 18/255))
+                        .font(.system(size: 30, weight: .regular))
+                        .opacity(1)
+                        .multilineTextAlignment(.center)
                 }
-                .frame(width: 413, height: 181) // Fixed dimensions for the upload image
+                .frame(width: 413, height: 181)
                 .background(Color(UIColor.systemGray6))
-                .cornerRadius(10) // Rounded corners
+                .cornerRadius(10)
                 .padding()
             }
         }
     }
 }
-
 
 
 // MARK: - IngredientPopup
@@ -189,23 +190,21 @@ struct IngredientPopup: View {
             TextField("Ingredient Name", text: $ingredientName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
 
-            // Custom Picker with background color
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.orange.opacity(0.2)) // Background color for the picker
+                    .fill(Color.orange.opacity(0.2))
 
                 Picker("Measurement", selection: $selectedMeasurement) {
                     ForEach(["Cup 🥛", "Spoon 🥄"], id: \.self) { measurement in
                         Text(measurement)
-                            .foregroundColor(selectedMeasurement == measurement ? .orange : .primary) // Change text color based on selection
+                            .foregroundColor(selectedMeasurement == measurement ? .orange : .primary)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .padding(10) // Padding for the picker
+                .padding(10)
             }
 
             HStack {
-                // Minus button
                 Button(action: {
                     if amount > 1 {
                         amount -= 1
@@ -213,43 +212,40 @@ struct IngredientPopup: View {
                 }) {
                     Text("-")
                         .font(.largeTitle)
-                        .frame(width: 40, height: 40) // Button size
+                        .frame(width: 40, height: 40)
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(5)
                 }
 
-                // Display the amount
                 Text("\(amount, specifier: "%.0f")")
-                    .frame(width: 40, alignment: .center) // Fixed width for alignment
+                    .frame(width: 40, alignment: .center)
                 
-                // Plus button
                 Button(action: {
-                    if amount < 10 { // Assuming maximum is 10
+                    if amount < 10 {
                         amount += 1
                     }
                 }) {
                     Text("+")
                         .font(.largeTitle)
-                        .frame(width: 40, height: 40) // Button size
+                        .frame(width: 40, height: 40)
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(5)
                 }
 
-                // Measurement label
-                Text(selectedMeasurement) // Measurement label
-                    .padding(.leading, 10) // Optional padding for better spacing
+                Text(selectedMeasurement)
+                    .padding(.leading, 10)
             }
             
-            HStack(spacing: 20) { // Add spacing between buttons
+            HStack(spacing: 20) {
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Cancel")
-                        .frame(width: 134, height: 36) // Set width and height
-                        .background(Color(hue: 1.0, saturation: 0.0, brightness: 0.878)) // Background color for the Cancel button
-                        .foregroundColor(.orange) // Text color
-                        .cornerRadius(5) // Rounded corners
-                        .padding(.leading, 10) // Optional padding
+                        .frame(width: 134, height: 36)
+                        .background(Color(hue: 1.0, saturation: 0.0, brightness: 0.878))
+                        .foregroundColor(.orange)
+                        .cornerRadius(5)
+                        .padding(.leading, 10)
                 }
 
                 Button(action: {
@@ -258,22 +254,24 @@ struct IngredientPopup: View {
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Add")
-                        .frame(width: 134, height: 36) // Set width and height
-                        .background(Color.orange) // Background color for the Add button
-                        .foregroundColor(.white) // Text color
-                        .cornerRadius(5) // Rounded corners
-                        .padding(.trailing, 10) // Optional padding
+                        .frame(width: 134, height: 36)
+                        .background(Color.orange)
+                        .foregroundColor(.white)
+                        .cornerRadius(5)
+                        .padding(.trailing, 10)
                 }
             }
-            .padding(.top, 20) // Optional padding at the top for spacing
+            .padding(.top, 20)
         }
         .padding()
-        .frame(width: 306, height: 382) // Set the desired width and height
-        .background(Color.white) // Optional: Set a background color for the popup
-        .cornerRadius(10) // Optional: Add corner radius for rounded edges
-        .shadow(radius: 10) // Optional: Add shadow for better visibility
+        .frame(width: 306, height: 382)
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(radius: 10)
     }
 }
+
+
 
 
 

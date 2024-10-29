@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var recipeStore = RecipeStore()
+    @StateObject var recipeStore = RecipeStore()
     @State private var searchText = ""
     
     var body: some View {
@@ -22,8 +22,9 @@ struct ContentView: View {
                 // Recipe List
                 if !recipeStore.recipes.isEmpty {
                     List(filteredRecipes) { recipe in
-                        NavigationLink(destination: RecipeDetailView(viewModel: NewRecipeViewModel(recipeStore: recipeStore, recipe: recipe))) {
-                            VStack(alignment: .leading, spacing: 0) { 
+                        // Pass recipeStore to RecipeDetailView
+                        NavigationLink(destination: RecipeDetailView(viewModel: NewRecipeViewModel(recipeStore: recipeStore, recipe: recipe), recipeStore: recipeStore, recipe: recipe)) {
+                            VStack(alignment: .leading, spacing: 0) {
                                 ZStack(alignment: .bottomLeading) {
                                     if let recipeImage = recipe.image {
                                         Image(uiImage: recipeImage)
@@ -31,44 +32,40 @@ struct ContentView: View {
                                             .scaledToFit()
                                             .frame(width: 414, height: 272)
                                             .clipped()
-                                            .cornerRadius(8) // Optional: Add corner radius
+                                            .cornerRadius(8)
                                         
-                                        // Gradient overlay
                                         LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.5), Color.clear]),
                                                        startPoint: .bottom,
                                                        endPoint: .top)
-                                        .frame(width: 414, height: 272)
+                                            .frame(width: 414, height: 272)
                                         
-                                        // Recipe Title
                                         Text(recipe.name)
                                             .font(.headline)
-                                            .foregroundColor(.white) // Title color
+                                            .foregroundColor(.white)
                                             .padding(10)
-                                            .background(Color.black.opacity(0.5)) // Background for better readability
+                                            .background(Color.black.opacity(0.5))
                                             .cornerRadius(5)
-                                            .padding(.bottom, 0) // Remove padding below title
-                                            .padding(.horizontal, 10) // Add horizontal padding
+                                            .padding(.bottom, 0)
+                                            .padding(.horizontal, 10)
                                     }
                                 }
                                 
-                                // Recipe Description
                                 if let description = recipe.description {
                                     Text(description)
                                         .font(.subheadline)
                                         .foregroundColor(.gray)
-                                        .lineLimit(2) // Limit to two lines for a concise view
-                                        .padding(.top, 5) // Add some spacing above description
-                                        .padding(.horizontal, 10) // Horizontal padding for consistency
+                                        .lineLimit(2)
+                                        .padding(.top, 5)
+                                        .padding(.horizontal, 10)
                                     
-                                    // "See All" Link
                                     Text("See all")
                                         .font(.footnote)
                                         .foregroundColor(.blue)
                                         .padding(.top, 2)
-                                        .padding(.horizontal, 10) // Horizontal padding for consistency
+                                        .padding(.horizontal, 10)
                                 }
                             }
-                            .padding(.vertical, 0) // Remove vertical padding between recipe items
+                            .padding(.vertical, 0)
                         }
                     }
                 } else {
@@ -76,7 +73,7 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Food Recipes")
-            .navigationBarItems(trailing: addButton) // Use the defined addButton here
+            .navigationBarItems(trailing: addButton)
         }
     }
 
@@ -96,15 +93,19 @@ struct ContentView: View {
     }
 
     private var addButton: some View {
-        NavigationLink(destination: NewRecipeView(viewModel: NewRecipeViewModel(recipeStore: recipeStore, recipe: Recipe(name: "")), isEditing: false)) {
-            Image(systemName: "plus") // Use the correct icon here
-                .font(.system(size: 25)) // Adjust size as needed
+        NavigationLink(
+            destination: NewRecipeView(
+                viewModel: NewRecipeViewModel(recipeStore: recipeStore, recipe: Recipe(name: "")),
+                isEditing: false // Set to false for adding a new recipe
+            )
+        ) {
+
+            Image(systemName: "plus")
+                .font(.system(size: 25))
                 .foregroundColor(.orange)
-                .opacity(1) // Set opacity
+                .opacity(1)
         }
     }
-    
-    // Computed property for filtered recipes based on the search text
     private var filteredRecipes: [Recipe] {
         if searchText.isEmpty {
             return recipeStore.recipes

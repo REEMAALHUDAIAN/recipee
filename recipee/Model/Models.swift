@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-struct Ingredient: Identifiable {
+struct Ingredient: Identifiable, Equatable { // Add Equatable here
     var id = UUID()
     var name: String
     var amount: Double
