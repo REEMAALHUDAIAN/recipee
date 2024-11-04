@@ -1,14 +1,19 @@
-# Recipe App 🍲📱
+<htmel>
+<hedaer>
+</hedaer>
+
+<body>
+<h1>Recipe App 🍲📱</h1>
 
  Overview
 Welcome to the Recipe App! This is an iOS app built with the magic of SwiftUI. It lets you create, view, edit, and delete all your favorite recipes (with images and ingredients, of course). Whether you're a master chef or a beginner in the kitchen, this app is designed to make your recipe management super easy and fun! Plus, it's all powered by the MVVM (Model-View-ViewModel) design pattern to keep things neat and organized.
 
  Features ✨
-- **Add Recipes**: Got a new culinary masterpiece in mind? Add it by providing a title, description, ingredients, and even a mouth-watering image!
-- **Edit Recipes**: Made a mistake or want to add a new twist? No problem! Edit existing recipes anytime.
-- **Delete Recipes**: Say goodbye to those not-so-great recipes and keep only the ones you love.
-- **Ingredient Management**: Add, edit, or remove ingredients with just a few taps.
-- **Image Picker**: Make your recipes shine by adding pictures from your photo library!
+- Add Recipes**: Got a new culinary masterpiece in mind? Add it by providing a title, description, ingredients, and even a mouth-watering image!
+- Edit Recipes**: Made a mistake or want to add a new twist? No problem! Edit existing recipes anytime.
+- Delete Recipes**: Say goodbye to those not-so-great recipes and keep only the ones you love.
+- Ingredient Management**: Add, edit, or remove ingredients with just a few taps.
+- Image Picker**: Make your recipes shine by adding pictures from your photo library!
 
  Project Structure 🏗️
 The app is organized into SwiftUI files and view models, making it easy to understand and maintain:
@@ -69,4 +74,8 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 Have questions, suggestions, or just want to say hi? Reach out at [Your Name/Email].
 
 Happy cooking and coding! 🍳👨‍🍳👩‍🍳
+</body>
+</body>
+</body>
+</htmel>
 
