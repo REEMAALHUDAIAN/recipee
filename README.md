@@ -3,19 +3,20 @@
 </hedaer>
 
 <body>
+ <scr>
 <h1>Recipe App 🍲📱</h1>
 
- Overview
+<h2>Overview</h2> 
 Welcome to the Recipe App! This is an iOS app built with the magic of SwiftUI. It lets you create, view, edit, and delete all your favorite recipes (with images and ingredients, of course). Whether you're a master chef or a beginner in the kitchen, this app is designed to make your recipe management super easy and fun! Plus, it's all powered by the MVVM (Model-View-ViewModel) design pattern to keep things neat and organized.
 
- Features ✨
+<h2> Features ✨</h2>
 - Add Recipes**: Got a new culinary masterpiece in mind? Add it by providing a title, description, ingredients, and even a mouth-watering image!
 - Edit Recipes**: Made a mistake or want to add a new twist? No problem! Edit existing recipes anytime.
 - Delete Recipes**: Say goodbye to those not-so-great recipes and keep only the ones you love.
 - Ingredient Management**: Add, edit, or remove ingredients with just a few taps.
 - Image Picker**: Make your recipes shine by adding pictures from your photo library!
 
- Project Structure 🏗️
+<h2> Project Structure 🏗️</h2>
 The app is organized into SwiftUI files and view models, making it easy to understand and maintain:
 
 1. Models
@@ -34,7 +35,7 @@ The app is organized into SwiftUI files and view models, making it easy to under
    - `NewRecipeViewModel`: Takes care of all the actions related to creating or editing recipes, including selecting images and adding ingredients.
    - `RecipeStore`: Your recipe library! Manages adding, editing, and deleting your recipes.
 
- Getting Started 🚀
+ <h2>Getting Started 🚀</h2>
 Want to run the Recipe App locally? Here’s how:
 
 1. Clone the Repository
@@ -50,7 +51,7 @@ Want to run the Recipe App locally? Here’s how:
    - Make sure your simulator or connected device is ready.
    - Hit the `Run` button (or press `Cmd + R`) and watch the magic happen!
 
- Dependencies 📦
+<h2> Dependencies 📦</h2>
 - **SwiftUI**: The whole app is built with SwiftUI, making it modern, fast, and fun to use.
 - **UIKit**: Some features, like the `ImagePicker`, use `UIKit` for that classic touch.
 
